@@ -5,7 +5,9 @@ jobs:
   myjob:
     runs-on: ubuntu-latest
     steps:
-      
+
+    - name: Checkout repository
+      uses: actions/checkout@v3  
     - name: print message
       run: echo "Testing 123" > test.txt
     - name: list files
