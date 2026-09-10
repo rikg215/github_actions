@@ -4,7 +4,7 @@ name: My First Workflow
 
 jobs:
   first_job:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Welcome Message
       run: echo "Welcome to the world" > file.txt
