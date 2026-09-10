@@ -1,0 +1,46 @@
+name: build-and-push
+
+on: 
+  push:
+    branches: [main]
+
+
+permissions:
+  contents: read
+  packages: write
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+    
+      - name: Login to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          passsword: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          provenance: false
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:latest
+
+      - name: Print digest
+        run: |
+          echo "IMAGE=ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}"
+          echo "IMAGE=ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}" >> "$GITHUB_STEP_SUMMARY"
