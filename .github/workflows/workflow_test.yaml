@@ -14,3 +14,7 @@ jobs:
       run: ls
     - name: read file
       run: cat README.md
+    - name: Add test file to repository
+      run: git add .
+    - name: commit and push to repository
+      run: git commit -m "adding test file to repo" && git push
