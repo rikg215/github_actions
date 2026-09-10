@@ -16,6 +16,8 @@ jobs:
       run: ls
     - name: read file
       run: cat README.md
+    - name: Configure account details on runner
+      run: git config --global user.email "${{ secrets.USER_EMAIL }}" && git config --global user.name "${{ secrets.USER_NAME }}"
     - name: Add test file to repository
       run: git add .
     - name: commit and push to repository
