@@ -8,6 +8,8 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v3  
+    - name: auth
+      run: 
     - name: print message
       run: echo "Testing 123" > test.txt
     - name: list files
@@ -18,3 +20,5 @@ jobs:
       run: git add .
     - name: commit and push to repository
       run: git commit -m "adding test file to repo" && git push
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
